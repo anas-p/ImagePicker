@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileController: UIViewController {
+class ProfileController: UIViewController{
     
     @IBOutlet weak var imgProfile: UIImageView!
     @IBOutlet weak var btnChooseImage: UIButton!
@@ -72,6 +72,7 @@ class ProfileController: UIViewController {
     }
     
     //MARK: - Choose image from camera roll
+    
     func openGallary(){
         imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
         //If you dont want to edit the photo then you can set allowsEditing to false
@@ -82,6 +83,7 @@ class ProfileController: UIViewController {
 }
 
 //MARK: - UIImagePickerControllerDelegate
+
 extension ProfileController:  UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         /*
@@ -96,10 +98,11 @@ extension ProfileController:  UIImagePickerControllerDelegate, UINavigationContr
         //Dismiss the UIImagePicker after selection
         picker.dismiss(animated: true, completion: nil)
     }
-
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print("Cancelled")
-    }
     
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.isNavigationBarHidden = false
+        self.dismiss(animated: true, completion: nil)
+    }
 }
+
 
