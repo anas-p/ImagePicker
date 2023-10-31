@@ -2,8 +2,8 @@
 //  ProfileController.swift
 //  ProfilePicker
 //
-//  Created by Anas Zaheer on 11/12/17.
-//  Copyright © 2017 nfnlabs. All rights reserved.
+//  Created by Anas P on 11/12/17.
+//  Updated on 31/10/2023
 //
 
 import UIKit
@@ -29,6 +29,7 @@ class ProfileController: UIViewController{
         self.btnChooseImage.layer.cornerRadius = 5
     }
     
+    /// Button action
     @IBAction func btnChooseImageOnClick(_ sender: UIButton) {
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -55,10 +56,10 @@ class ProfileController: UIViewController{
         self.present(alert, animated: true, completion: nil)
     }
     
-    //MARK: - Open the camera
-    func openCamera(){
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
-            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+    /// Open the camera
+    func openCamera() {
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)){
+            imagePicker.sourceType = UIImagePickerController.SourceType.camera
             //If you dont want to edit the photo then you can set allowsEditing to false
             imagePicker.allowsEditing = true
             imagePicker.delegate = self
@@ -71,31 +72,26 @@ class ProfileController: UIViewController{
         }
     }
     
-    //MARK: - Choose image from camera roll
-    
-    func openGallary(){
-        imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        //If you dont want to edit the photo then you can set allowsEditing to false
+    /// Choose image from camera roll
+    func openGallary() {
+        imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+        // If you don't want to edit the photo then you can set allowsEditing to false
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         self.present(imagePicker, animated: true, completion: nil)
     }
 }
 
-//MARK: - UIImagePickerControllerDelegate
+// MARK: - UIImagePickerControllerDelegate
 
-extension ProfileController:  UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        /*
-         Get the image from the info dictionary.
-         If no need to edit the photo, use `UIImagePickerControllerOriginalImage`
-         instead of `UIImagePickerControllerEditedImage`
-         */
-        if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage{
+extension ProfileController:  UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // Get the image from the info dictionary.
+        if let editedImage = info[.editedImage] as? UIImage {
             self.imgProfile.image = editedImage
         }
         
-        //Dismiss the UIImagePicker after selection
+        // Dismiss the UIImagePicker after selection
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -104,5 +100,3 @@ extension ProfileController:  UIImagePickerControllerDelegate, UINavigationContr
         self.dismiss(animated: true, completion: nil)
     }
 }
-
-
